@@ -1,27 +1,29 @@
 package com.example.socialv2.user;
 
+import com.example.socialv2.comment.Comment;
 import com.example.socialv2.common.BaseTime;
-import com.example.socialv2.friend.Friend;
+import com.example.socialv2.friend.Friends;
+import com.example.socialv2.like.Likes;
+import com.example.socialv2.post.Post;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 @Getter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "_user")
 public class User extends BaseTime implements UserDetails {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
     @Column(nullable = false,unique = true)
@@ -45,9 +47,29 @@ public class User extends BaseTime implements UserDetails {
 
     private int viewedProfile;
 
-    @OneToMany(mappedBy = "friendUser")
-    private List<Friend> friends = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Post> posts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Friends> friends = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Likes> likes = new ArrayList<>();
+
+
+    protected User(){
+
+    }
+    public User(Long id){
+        this.id = id;
+    }
+    public User(Long id, String email){
+        this.id = id;
+        this.email = email;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

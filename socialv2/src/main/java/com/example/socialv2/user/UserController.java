@@ -1,5 +1,6 @@
 package com.example.socialv2.user;
 
+import com.example.socialv2.friend.FriendDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,4 +22,11 @@ public class UserController {
     public ResponseEntity<UserDTO> getUser(@PathVariable("id")Long id){
         return ResponseEntity.ok(userservice.getUser(id));
     }
+
+    @GetMapping("/{id}/friends")
+    public ResponseEntity<List<FriendDTO>> getUserWithFriends(@PathVariable("id")Long id){
+        return ResponseEntity.ok(userservice.getUserWithFriends(id));
+    }
+
+
 }
