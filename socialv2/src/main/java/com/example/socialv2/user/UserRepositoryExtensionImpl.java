@@ -22,8 +22,6 @@ public class UserRepositoryExtensionImpl extends QuerydslRepositorySupport imple
 
     @Override
     public  List<FriendDTO> findUserFriendsById(Long id) {
-
-
         List<FriendDTO> fetch = from(friends)
                 .innerJoin(user).on(friends.friend.eq(user))
                 .where(friends.user.id.eq(id))
@@ -32,8 +30,6 @@ public class UserRepositoryExtensionImpl extends QuerydslRepositorySupport imple
                         user.email,
                         user.name,
                         user.picturePath)).fetch();
-
-
         return fetch;
     }
 }

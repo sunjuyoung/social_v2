@@ -13,21 +13,19 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 @Entity
-@Table(name = "comment")
+
 public class Comment extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String content;
+    private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
     private Post post;
 
     protected Comment(){

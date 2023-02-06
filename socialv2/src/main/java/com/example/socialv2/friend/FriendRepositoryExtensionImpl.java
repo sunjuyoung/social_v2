@@ -13,7 +13,6 @@ public class FriendRepositoryExtensionImpl extends QuerydslRepositorySupport imp
 
     @Override
     public boolean existsFriend(Long userId, Long friendId) {
-
         return from(friends)
                 .where(friends.user.id.eq(userId).and(friends.friend.id.eq(friendId)))
                 .select(friends.id).fetchFirst() != null;

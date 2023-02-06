@@ -15,11 +15,16 @@ public class FriendService {
     private final UserRepository userRepository;
 
     public void addFriend(Long userId,Long friendId){
+        //엔티티 조회
+        User user = userRepository.findById(userId).orElseThrow();
+        User friendUser = userRepository.findById(friendId).orElseThrow();
+
         if(friendRepository.existsFriend(userId,friendId)){
-            friendRepository.deleteByFriend(new User(friendId));
+            friendRepository.deleteByFriend(friendUser);
         }else {
-            friendRepository.save(new Friends(new User(userId),new User(friendId)));
+            friendRepository.save(new Friends(user,friendUser));
         }
+
 
     }
 }

@@ -18,6 +18,7 @@ public class Post extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -27,4 +28,12 @@ public class Post extends BaseTime {
 
 
 
+    public Post(User user, String description) {
+        this.user = user;
+        this.description = description;
+    }
+
+    public void updateDescription(String description){
+        this.description = description;
+    }
 }
