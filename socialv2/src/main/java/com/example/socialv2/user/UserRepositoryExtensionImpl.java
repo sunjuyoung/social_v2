@@ -32,4 +32,26 @@ public class UserRepositoryExtensionImpl extends QuerydslRepositorySupport imple
                         user.picturePath)).fetch();
         return fetch;
     }
+
+    @Override
+    public UserDTO findUserAndFriendCount(Long id) {
+        UserDTO userDTO = from(user)
+                .leftJoin(friends).on(friends.user.eq(user))
+                .where(user.user.id.eq(id))
+                .groupBy(friends.id)
+                .select(new QUserDTO(
+                                user.id,
+                                user.name,
+                                user.email,
+                                user.role,
+                                user.location,
+                                user.occupation,
+                                user.picturePath,
+                                user.impressions,
+                                user.viewedProfile,
+                                friends.id.countDistinct().intValue()
+                        )
+                ).fetchOne();
+        return userDTO;
+    }
 }

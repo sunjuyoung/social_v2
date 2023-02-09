@@ -12,7 +12,7 @@ spring:
       max-request-size: 10MB
       enabled: true
       max-file-size: 10MB
-      location: C:\\Users\\SUN\\work\\socialapp_v2\\client
+      location: C:\\Users\\SUN\\work\\socialapp_v2\\client\\src\\assets
 
 
   jpa:
@@ -29,4 +29,4 @@ logging:
   level:
     com.example.socialv2: debug
 
-com.example.socialapp.path: C:\\Users\\SUN\\work\\socialapp_v2\\client
+com.example.socialapp.path: C:\\Users\\SUN\\work\\socialapp_v2\\client\\src\\assets

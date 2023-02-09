@@ -9,4 +9,6 @@ import java.util.List;
 public interface UserRepositoryExtension {
 
     List<FriendDTO> findUserFriendsById(Long id);
+
+    UserDTO findUserAndFriendCount(Long id);
 }

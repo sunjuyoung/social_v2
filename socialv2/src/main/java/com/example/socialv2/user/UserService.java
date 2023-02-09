@@ -26,8 +26,8 @@ public class UserService {
     }
 
     public UserDTO getUser(Long id) {
-        User user = userRepository.findById(id).orElseThrow();
-        return modelMapper.map(user, UserDTO.class);
+        UserDTO userDTO = userRepository.findUserAndFriendCount(id);
+        return userDTO;
     }
 
     public List<FriendDTO>  getUserWithFriends(Long id) {

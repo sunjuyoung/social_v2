@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Map;
+
 @RestController
 @Log4j2
 @RequiredArgsConstructor
@@ -18,8 +20,9 @@ public class UploadController {
     private final UploadService uploadService;
 
     @PostMapping(value = "/upload/{name}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> upload(@PathVariable("name")String name, @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> upload(@PathVariable("name")String name, @RequestParam("file") MultipartFile file) {
         UploadResultDTO uploadResultDTO = uploadService.uploadFile(name,file);
-        return ResponseEntity.ok().body(uploadResultDTO.getLink());
+        Map<String,String> result = Map.of("result", uploadResultDTO.getLink());
+        return ResponseEntity.ok().body(result);
     }
 }
