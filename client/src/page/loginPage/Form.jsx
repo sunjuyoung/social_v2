@@ -71,8 +71,7 @@ const Form = () => {
 
     const userImage = await savedUserImageResponse.json();
     const rData = {...values,name:values.nickname,picturePath:userImage.result};
-    console.log(rData)
-  
+
     const savedUserResponse = await fetch(
       "http://localhost:8083/api/auth/register",
       {
