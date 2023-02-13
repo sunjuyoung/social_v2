@@ -31,6 +31,9 @@ public class PostRepositoryExtensionImpl extends QuerydslRepositorySupport imple
         result.where(user.id.eq(userId));
         return result.fetch();
     }
+
+
+
     private JPQLQuery<PostDTO> getPostDTOJPQLQuery() {
         JPQLQuery<PostDTO> result = from(post)
                 .innerJoin(post.user, user)
@@ -45,7 +48,8 @@ public class PostRepositoryExtensionImpl extends QuerydslRepositorySupport imple
                         user.location,
                         user.picturePath,
                         likes.countDistinct().intValue(),
-                        comment.countDistinct().intValue()
+                        comment.countDistinct().intValue(),
+                        post.postPicturePath
                 ));
         return result;
     }

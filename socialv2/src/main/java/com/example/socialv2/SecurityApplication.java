@@ -30,7 +30,7 @@ public class SecurityApplication {
 				request.setEmail("test"+i);
 				request.setLocation("seoul");
 				request.setOccupation("test");
-				request.setPicturePath("fakePath");
+				request.setPicturePath("newjinss.jpg");
 
 
 				authenticationService.register(request);

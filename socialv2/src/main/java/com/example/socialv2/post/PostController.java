@@ -16,7 +16,6 @@ public class PostController {
     @GetMapping
     public ResponseEntity<List<PostDTO>> getPosts(){
         List<PostDTO> postDTOS = postService.getPosts();
-
         return ResponseEntity.ok().body(postDTOS);
     }
     @GetMapping("/{userId}")
@@ -28,8 +27,9 @@ public class PostController {
     @PostMapping("/{userId}")
     public ResponseEntity<?> addPost(@PathVariable("userId")Long userId,
                                      @RequestBody PostDTO postDTO){
-        postService.addPost(userId,postDTO);
-        return ResponseEntity.ok().body("success");
+        List<PostDTO> postDTOS = postService.addPost(userId, postDTO);
+
+        return ResponseEntity.ok().body(postDTOS);
     }
     @PutMapping("/{id}")
     public ResponseEntity<?> updatePost(@PathVariable("id")Long id,

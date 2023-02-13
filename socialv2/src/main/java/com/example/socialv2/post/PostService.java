@@ -1,5 +1,8 @@
 package com.example.socialv2.post;
 
+import com.example.socialv2.like.LikeRepository;
+import com.example.socialv2.like.LikeService;
+import com.example.socialv2.like.LikesDTO;
 import com.example.socialv2.user.User;
 import com.example.socialv2.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,14 +21,18 @@ public class PostService {
     private final UserRepository userRepository;
 
     public List<PostDTO> getPosts() {
-        List<PostDTO> postDTOS = postRepository.postListWithLikeAndCommentCount();
+       // List<PostDTO> postDTOS   = postRepository.postListWithLikeAndCommentCount();
+        List<Post> posts = postRepository.findAll();
+        List<PostDTO> postDTOS = posts.stream().map(post -> new PostDTO(post)).collect(Collectors.toList());
         return postDTOS;
     }
 
-    public void addPost(Long userId, PostDTO postDTO) {
+    public List<PostDTO> addPost(Long userId, PostDTO postDTO) {
         User user = userRepository.findUserOne(userId).orElseThrow();
-        Post post = new Post(user,postDTO.getDescription());
+        Post post = new Post(user,postDTO.getDescription(),postDTO.getPostPicturePath());
         postRepository.save(post);
+        List<PostDTO> postDTOS = postRepository.postListWithLikeAndCommentCount();
+        return postDTOS;
     }
 
     public List<PostDTO> getPostsByUserId(Long userId) {
