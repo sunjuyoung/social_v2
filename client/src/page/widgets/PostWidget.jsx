@@ -11,7 +11,7 @@ import {
   import { useState } from "react";
   import { useDispatch, useSelector } from "react-redux";
   import { setPost } from "../../state";
-  
+
   const PostWidget = ({
     postId,
     postUserId,
@@ -19,18 +19,23 @@ import {
     description,
     location,
     picturePath,
-    userPicturePath,
+    postPicturePath,
     likes,
-    comments,
+   // comments,
   }) => {
     
     const [isComments, setIsComments] = useState(false);
     const dispatch = useDispatch();
     const token = useSelector((state) => state.token);
-    const loggedInUserId = useSelector((state) => state.user._id);
-    const isLiked = Boolean(likes[loggedInUserId]);
-    const likeCount = Object.keys(likes).length;
-  
+    const loggedInUserId = useSelector((state) => state.user.id);
+    const postPicPath = new URL(`../../assets/${name}/${postPicturePath}`, import.meta.url).href;
+
+    const isLiked = likes?.includes(parseInt(loggedInUserId));
+   // const isLiked = Boolean(likes[loggedInUserId]);
+
+   // const likeCount = Object.keys(likes).length;
+    const likeCount = likes.length;
+
     const { palette } = useTheme();
     const main = palette.neutral.main;
     const primary = palette.primary.main;
@@ -54,7 +59,7 @@ import {
           friendId={postUserId}
           name={name}
           subtitle={location}
-          userPicturePath={userPicturePath}
+          userPicturePath={`${name}/${picturePath}`}
         />
         <Typography color={main} sx={{ mt: "1rem" }}>
           {description}
@@ -65,7 +70,7 @@ import {
             height="auto"
             alt="post"
             style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-            src={`http://localhost:3001/assets/${picturePath}`}
+            src={postPicPath}
           />
         )}
         <FlexBetween mt="0.25rem">
@@ -85,7 +90,7 @@ import {
               <IconButton onClick={() => setIsComments(!isComments)}>
                 <ChatBubbleOutlineOutlined />
               </IconButton>
-              <Typography>{comments.length}</Typography>
+              <Typography>1</Typography>
             </FlexBetween>
           </FlexBetween>
   
@@ -93,7 +98,7 @@ import {
             <ShareOutlined />
           </IconButton>
         </FlexBetween>
-        {isComments && (
+        {/* {isComments && (
           <Box mt="0.5rem">
             {comments.map((comment, i) => (
               <Box key={`${name}-${i}`}>
@@ -105,7 +110,7 @@ import {
             ))}
             <Divider />
           </Box>
-        )}
+        )} */}
       </WidgetWrapper>
     );
   };

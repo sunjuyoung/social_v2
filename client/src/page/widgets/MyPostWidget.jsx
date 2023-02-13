@@ -50,10 +50,11 @@ import {
 
       let userImage;
       if (image) {
+        console.log(image);
          userImage = await savedUserImageResponse.json();
       }
 
-      const postData = {description:post,picturePath:userImage}
+      const postData = {description:post,postPicturePath:userImage? userImage.result :""}
       const response = await fetch(`http://localhost:8083/api/post/${id}`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}`,"Content-Type": "application/json" },

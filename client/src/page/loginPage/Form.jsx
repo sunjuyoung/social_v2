@@ -55,11 +55,8 @@ const Form = () => {
 
   const register = async (values, onSubmitProps) => {
 
-    // this allows us to send form info with image
     const formData = new FormData();
-    // for (let value in values) {
-    //   formData.append(value, values[value]);
-    // }
+
     formData.append("file", values.picture);
     const savedUserImageResponse = await fetch(
         "http://localhost:8083/upload/"+values.nickname,
@@ -70,7 +67,7 @@ const Form = () => {
       );
 
     const userImage = await savedUserImageResponse.json();
-    const rData = {...values,name:values.nickname,picturePath:userImage.result};
+    const rData = {...values,name:values.nickname,picturePath:userImage? userImage.result:""};
 
     const savedUserResponse = await fetch(
       "http://localhost:8083/api/auth/register",

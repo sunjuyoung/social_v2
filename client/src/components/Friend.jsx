@@ -19,7 +19,8 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
 
-  const isFriend = friends.find((friend) => friend.id === friendId);
+  //const isFriend = friends.find((friend) => friend.id === friendId);
+  const isFriend = false;
 
   const patchFriend = async () => {
     const response = await fetch(
