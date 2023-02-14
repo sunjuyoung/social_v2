@@ -8,6 +8,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
   const posts = useSelector((state) => state.posts);
   const token = useSelector((state) => state.token);
 
+
   const getPosts = async () => {
     const response = await fetch("http://localhost:8083/api/post", {
       method: "GET",
@@ -48,7 +49,8 @@ const PostsWidget = ({ userId, isProfile = false }) => {
           location,
           picturePath,
           postPicturePath,
-          likes
+          likes,
+          comments
 
         }) => (
           <PostWidget
@@ -61,6 +63,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
             picturePath={picturePath}
             postPicturePath={postPicturePath}
             likes={likes}
+            comments={comments}
 
           />
         )

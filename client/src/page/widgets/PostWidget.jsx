@@ -8,9 +8,10 @@ import {
   import FlexBetween from "../../components/FlexBetween";
   import Friend from "../../components/Friend";
   import WidgetWrapper from "../../components/WidgetWrapper";
-  import { useState } from "react";
+  import { useEffect, useState } from "react";
   import { useDispatch, useSelector } from "react-redux";
   import { setPost } from "../../state";
+
 
   const PostWidget = ({
     postId,
@@ -21,15 +22,19 @@ import {
     picturePath,
     postPicturePath,
     likes,
-   // comments,
+    comments,
   }) => {
     
     const [isComments, setIsComments] = useState(false);
     const dispatch = useDispatch();
     const token = useSelector((state) => state.token);
+
     const loggedInUserId = useSelector((state) => state.user.id);
     const postPicPath = new URL(`../../assets/${name}/${postPicturePath}`, import.meta.url).href;
+    
+    
 
+    
     const isLiked = likes?.includes(parseInt(loggedInUserId));
    // const isLiked = Boolean(likes[loggedInUserId]);
 
@@ -90,7 +95,7 @@ import {
               <IconButton onClick={() => setIsComments(!isComments)}>
                 <ChatBubbleOutlineOutlined />
               </IconButton>
-              <Typography>1</Typography>
+              <Typography>{comments?.length}</Typography>
             </FlexBetween>
           </FlexBetween>
   
@@ -98,19 +103,19 @@ import {
             <ShareOutlined />
           </IconButton>
         </FlexBetween>
-        {/* {isComments && (
+        {isComments && (
           <Box mt="0.5rem">
-            {comments.map((comment, i) => (
+            {comments?.map((comment, i) => (
               <Box key={`${name}-${i}`}>
                 <Divider />
                 <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
-                  {comment}
+                  {comment.description}
                 </Typography>
               </Box>
             ))}
             <Divider />
           </Box>
-        )} */}
+        )} 
       </WidgetWrapper>
     );
   };

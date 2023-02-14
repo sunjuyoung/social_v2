@@ -37,9 +37,19 @@ import {
     const mediumMain = palette.neutral.mediumMain;
     const medium = palette.neutral.medium;
 
+    const getPosts = async () => {
+      const response = await fetch("http://localhost:8083/api/post", {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await response.json();
+      dispatch(setPosts({ posts: data }));
+    };
+
     const handlePost = async () => {
       const formData = new FormData();
       formData.append("file", image);
+
       const savedUserImageResponse = await fetch(
         "http://localhost:8083/upload/"+name,
         {
@@ -60,8 +70,8 @@ import {
         headers: { Authorization: `Bearer ${token}`,"Content-Type": "application/json" },
         body: JSON.stringify(postData),
       });
-      const posts = await response.json();
-      dispatch(setPosts({ posts }));
+      await response.text();
+      getPosts();
       setImage(null);
       setPost("");
     };
