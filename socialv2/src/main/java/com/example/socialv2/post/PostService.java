@@ -23,16 +23,15 @@ public class PostService {
     public List<PostDTO> getPosts() {
        // List<PostDTO> postDTOS   = postRepository.postListWithLikeAndCommentCount();
         List<Post> posts = postRepository.findAll();
+
         List<PostDTO> postDTOS = posts.stream().map(post -> new PostDTO(post)).collect(Collectors.toList());
         return postDTOS;
     }
 
-    public List<PostDTO> addPost(Long userId, PostDTO postDTO) {
+    public void addPost(Long userId, PostDTO postDTO) {
         User user = userRepository.findUserOne(userId).orElseThrow();
         Post post = new Post(user,postDTO.getDescription(),postDTO.getPostPicturePath());
         postRepository.save(post);
-        List<PostDTO> postDTOS = postRepository.postListWithLikeAndCommentCount();
-        return postDTOS;
     }
 
     public List<PostDTO> getPostsByUserId(Long userId) {
@@ -47,5 +46,11 @@ public class PostService {
 
     public void deletePost(Long id) {
         postRepository.deleteById(id);
+    }
+
+    public PostDTO getPostsByPostId(Long postId) {
+        Post post = postRepository.findAllById(postId).orElseThrow();
+        PostDTO postDTO = new PostDTO(post);
+        return postDTO;
     }
 }

@@ -9,12 +9,23 @@ import java.io.Serializable;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class FriendDTO implements Serializable {
 
     private Long id;
+    private Long friendId;
     private String email;
     private String name;
-    private String picture_path;
+    private String picturePath;
+    private String occupation;
+
+    public FriendDTO(Friends friends) {
+        this.id = friends.getId();
+        this.friendId = friends.getFriend().getId();
+        this.email = friends.getFriend().getEmail();
+        this.name = friends.getFriend().getName();
+        this.picturePath = friends.getFriend().getPicturePath();
+        this.occupation = friends.getFriend().getOccupation();
+    }
 }

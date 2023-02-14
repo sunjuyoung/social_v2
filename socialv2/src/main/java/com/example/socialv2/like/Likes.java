@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "likes")
@@ -27,4 +26,13 @@ public class Likes {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
+
+    protected Likes(){
+
+    }
+
+    public Likes(User user, Post post) {
+        this.user = user;
+        this.post = post;
+    }
 }

@@ -13,7 +13,6 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 @Entity
-
 public class Comment extends BaseTime {
 
     @Id

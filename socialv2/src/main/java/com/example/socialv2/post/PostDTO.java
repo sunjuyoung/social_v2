@@ -1,5 +1,6 @@
 package com.example.socialv2.post;
 
+import com.example.socialv2.comment.CommentDTO;
 import com.example.socialv2.like.Likes;
 import com.example.socialv2.user.User;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -31,6 +32,8 @@ public class PostDTO implements Serializable {
 
     private int commentCount;
 
+    private List<CommentDTO> comments = new ArrayList<>();
+
 
     public PostDTO(Post post) {
         this.id = post.getId();
@@ -41,6 +44,8 @@ public class PostDTO implements Serializable {
         this.postPicturePath = post.getPostPicturePath();
         this.likes = post.getLikes().stream()
                 .map((l -> l.getUser().getId())).collect(Collectors.toList());
+        post.getComments().forEach(comment ->
+                this.comments.add(new CommentDTO(comment)));
 
     }
 

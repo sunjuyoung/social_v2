@@ -1,5 +1,6 @@
 package com.example.socialv2.post;
 
+import com.example.socialv2.comment.Comment;
 import com.example.socialv2.common.BaseTime;
 import com.example.socialv2.like.Likes;
 import com.example.socialv2.user.User;
@@ -10,11 +11,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "post")
@@ -31,10 +33,20 @@ public class Post extends BaseTime {
     private String description;
 
     @OneToMany(mappedBy = "post")
-    private List<Likes> likes = new ArrayList<>();
+    private Set<Likes> likes = new HashSet<>();
+
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments = new ArrayList<>();
 
     private String postPicturePath;
 
+    protected Post(){
+
+    }
+
+    public Post(Long id){
+        this.id = id;
+    }
     public Post(User user, String description, String postPicturePath) {
         this.user = user;
         this.description = description;

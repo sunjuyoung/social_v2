@@ -1,10 +1,16 @@
 package com.example.socialv2.like;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 @Data
-public class LikesDTO {
+@AllArgsConstructor
+@NoArgsConstructor
+public class LikesDTO implements Serializable {
 
-    private Long postId;
-    private Long userId;
+    private long post_id;
+    private long user_id;
 }

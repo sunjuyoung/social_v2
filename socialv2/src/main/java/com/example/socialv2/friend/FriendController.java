@@ -2,10 +2,9 @@ package com.example.socialv2.friend;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,6 +18,13 @@ public class FriendController {
                                        @PathVariable("friendId")Long friendId){
         friendService.addFriend(userId,friendId);
         return ResponseEntity.ok().body("success");
+    }
+
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<FriendDTO>> getFriendsByUserId(@PathVariable("userId")Long userId){
+        List<FriendDTO> friendDTOS = friendService.getFriendsByUserId(userId);
+        return ResponseEntity.ok().body(friendDTOS);
     }
 
 }

@@ -23,13 +23,18 @@ public class PostController {
         List<PostDTO> postDTOS = postService.getPostsByUserId(userId);
         return ResponseEntity.ok().body(postDTOS);
     }
+    @GetMapping("/get/{postId}")
+    public ResponseEntity<PostDTO> getPostsByPostId(@PathVariable("postId")Long postId){
+        PostDTO postDTO = postService.getPostsByPostId(postId);
+        return ResponseEntity.ok().body(postDTO);
+    }
 
     @PostMapping("/{userId}")
     public ResponseEntity<?> addPost(@PathVariable("userId")Long userId,
                                      @RequestBody PostDTO postDTO){
-        List<PostDTO> postDTOS = postService.addPost(userId, postDTO);
-
-        return ResponseEntity.ok().body(postDTOS);
+        postService.addPost(userId, postDTO);
+       // List<PostDTO> postDTOS = postService.getPosts();
+        return ResponseEntity.ok().body("success");
     }
     @PutMapping("/{id}")
     public ResponseEntity<?> updatePost(@PathVariable("id")Long id,
