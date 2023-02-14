@@ -13,7 +13,7 @@ const FriendListWidget = ({ userId }) => {
 
   const getFriends = async () => {
     const response = await fetch(
-      `http://localhost:3001/users/${userId}/friends`,
+      `http://localhost:8083/api/friend/${userId}`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
@@ -25,7 +25,7 @@ const FriendListWidget = ({ userId }) => {
 
   useEffect(() => {
     getFriends();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <WidgetWrapper>
@@ -38,11 +38,11 @@ const FriendListWidget = ({ userId }) => {
         Friend List
       </Typography>
       <Box display="flex" flexDirection="column" gap="1.5rem">
-        {friends.map((friend) => (
+        {friends?.map((friend) => (
           <Friend
-            key={friend._id}
-            friendId={friend._id}
-            name={`${friend.firstName} ${friend.lastName}`}
+            key={friend.id}
+            friendId={friend.friendId}
+            name={`${friend.name}`}
             subtitle={friend.occupation}
             userPicturePath={friend.picturePath}
           />

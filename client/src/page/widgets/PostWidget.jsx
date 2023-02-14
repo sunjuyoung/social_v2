@@ -32,9 +32,7 @@ import {
     const loggedInUserId = useSelector((state) => state.user.id);
     const postPicPath = new URL(`../../assets/${name}/${postPicturePath}`, import.meta.url).href;
     
-    
-
-    
+  
     const isLiked = likes?.includes(parseInt(loggedInUserId));
    // const isLiked = Boolean(likes[loggedInUserId]);
 
@@ -44,18 +42,28 @@ import {
     const { palette } = useTheme();
     const main = palette.neutral.main;
     const primary = palette.primary.main;
+
+    const getPosts = async () => {
+      const response = await fetch(`http://localhost:8083/api/post/get/${postId}`, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const updatedPost = await response.json();
+      dispatch(setPost({ post: updatedPost }));
+    };
+
   
     const patchLike = async () => {
-      const response = await fetch(`http://localhost:3001/posts/${postId}/like`, {
-        method: "PATCH",
+      const response =  await fetch(`http://localhost:8083/api/like`, {
+        method: isLiked? "DELETE" : "POST",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userId: loggedInUserId }),
+        body: JSON.stringify({ user_id: loggedInUserId ,post_id:postId}),
       });
-      const updatedPost = await response.json();
-      dispatch(setPost({ post: updatedPost }));
+      await response.text();
+      getPosts();
     };
   
     return (
@@ -69,7 +77,7 @@ import {
         <Typography color={main} sx={{ mt: "1rem" }}>
           {description}
         </Typography>
-        {picturePath && (
+        {postPicturePath && (
           <img
             width="100%"
             height="auto"
@@ -100,6 +108,7 @@ import {
           </FlexBetween>
   
           <IconButton>
+          
             <ShareOutlined />
           </IconButton>
         </FlexBetween>

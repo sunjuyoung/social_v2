@@ -19,14 +19,14 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
 
-  //const isFriend = friends.find((friend) => friend.id === friendId);
-  const isFriend = false;
+  const isFriend = friends.find((friend) => friend.id === friendId);
+
 
   const patchFriend = async () => {
     const response = await fetch(
       `http://localhost:3001/users/${id}/${friendId}`,
       {
-        method: "PATCH",
+        method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
