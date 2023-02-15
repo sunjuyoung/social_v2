@@ -19,12 +19,25 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
 
-  const isFriend = friends.find((friend) => friend.id === friendId);
+  const isFriend = friends?.find((friend) => friend.id === friendId);
+  const isMe = parseInt(friendId) === parseInt(id);
 
+
+  const getFriends = async () => {
+    const response = await fetch(
+      `http://localhost:8083/api/friend/${id}`,
+      {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    const data = await response.json();
+    dispatch(setFriends({ friends: data }));
+  };
 
   const patchFriend = async () => {
     const response = await fetch(
-      `http://localhost:3001/users/${id}/${friendId}`,
+      `http://localhost:8083/api/friend/${id}/${friendId}`,
       {
         method: "POST",
         headers: {
@@ -33,8 +46,8 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
         },
       }
     );
-    const data = await response.json();
-    dispatch(setFriends({ friends: data }));
+    await response.text();
+    getFriends();
   };
 
   return (
@@ -65,7 +78,8 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
           </Typography>
         </Box>
       </FlexBetween>
-      <IconButton
+      {isMe? (<></>)
+      : ( <IconButton
         onClick={() => patchFriend()}
         sx={{ backgroundColor: primaryLight, p: "0.6rem" }}
       >
@@ -74,7 +88,8 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
         ) : (
           <PersonAddOutlined sx={{ color: primaryDark }} />
         )}
-      </IconButton>
+      </IconButton>)}
+     
     </FlexBetween>
   );
 };

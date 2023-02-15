@@ -66,6 +66,7 @@ import {
       getPosts();
     };
   
+    console.log(postUserId , "poserUserID");
     return (
       <WidgetWrapper m="2rem 0">
         <Friend
